@@ -1,11 +1,8 @@
-// export default function ProposalsRegistrationStarted() {
-//     return <div>Proposal registration has started! Submit your proposals.</div>;
-//   }
-
-  
   const ProposalsRegistrationStarted = () => {
     return (
-      <div>Proposal registration has started! Submit your proposals</div>
+      <div className="flex flex-col w-full">
+        <h2 className="mb-4 text-4xl">Proposal registration has started! Submit your proposals</h2>
+      </div>
     )
   }
   

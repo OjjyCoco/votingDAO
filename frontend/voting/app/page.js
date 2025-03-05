@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { contractAddress, contractAbi } from "@/constants";
 import RegisteringVoters from "@/components/shared/RegisteringVoters";
 import ProposalsRegistrationStarted from "@/components/shared/ProposalsRegistrationStarted";
+import { publicClient } from "@/utils/client";
 // import ProposalsRegistrationEnded from "../components/ProposalsRegistrationEnded";
 // import VotingSessionStarted from "../components/VotingSessionStarted";
 // import VotingSessionEnded from "../components/VotingSessionEnded";
@@ -24,11 +25,11 @@ import ProposalsRegistrationStarted from "@/components/shared/ProposalsRegistrat
 import { hardhat } from "wagmi/chains";
 import { http, createPublicClient } from "viem";
 
-// Create a local Hardhat public client
-const publicClient = createPublicClient({
-  chain: hardhat, // Change chain accordingly
-  transport: http("http://127.0.0.1:8545"), // Change RPC accordingly
-});
+// // Create a local Hardhat public client
+// const publicClient = createPublicClient({
+//   chain: hardhat, // Change chain accordingly
+//   transport: http("http://127.0.0.1:8545"), // Change RPC accordingly
+// });
 
 export default function Home() {
   const [workflowStatus, setWorkflowStatus] = useState(null);

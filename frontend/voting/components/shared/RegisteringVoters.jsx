@@ -20,9 +20,15 @@ import { publicClient } from "@/utils/client";
 // Event
 import Event from "./Event";
 
+// context
+import { useWorkflow } from "@/contexts/WorkflowContext";
+
 
 
 const RegisteringVoters = () => {
+
+  // context
+  const { fetchWorkflowStatus } = useWorkflow();
 
   const [address, setAddress] = useState(null)
   const [events, setEvents] = useState([])
@@ -95,6 +101,13 @@ const RegisteringVoters = () => {
       alert("Transaction failed");
     }
   }, [isSuccess, errorConfirmation])
+
+  // Mettre à jour le workflow status après une transaction
+  useEffect(() => {
+    if (isSuccess) {
+      fetchWorkflowStatus(); // Met à jour le workflowStatus après une transaction réussie
+    }
+  }, [isSuccess]);
 
   return (
     <div className="flex flex-col w-full">

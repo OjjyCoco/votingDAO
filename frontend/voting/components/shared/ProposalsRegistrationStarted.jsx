@@ -18,13 +18,18 @@
   import { publicClient } from "@/utils/client";
   
   // Event
-  // import Event from "./Event";
   import { Card } from "@/components/ui/card"
   import { Badge } from "@/components/ui/badge"
+
+  // context
+  import { useWorkflow } from "@/contexts/WorkflowContext";
   
   
   
   const ProposalsRegistrationStarted = () => {
+
+    // context
+    const { fetchWorkflowStatus } = useWorkflow();
   
     const [proposal, setProposal] = useState(null)
     const [events, setEvents] = useState([])
@@ -84,7 +89,8 @@
       // Et on met ces events dans le state "events" en formant un objet cohérent pour chaque event
       setEvents(numberChangedLog.map(
           log => ({
-            proposalId: log.args.proposalId.toString()
+            proposalId: log.args.proposalId.toString(),
+            // ProposalDescription : log.args.ProposalDescription.toString()
           })
       ))
     }
@@ -97,6 +103,12 @@
         alert("Transaction failed");
       }
     }, [isSuccess, errorConfirmation])
+
+    useEffect(() => {
+      if (isSuccess) {
+        fetchWorkflowStatus(); // Met à jour le workflowStatus après une transaction réussie
+      }
+    }, [isSuccess])
   
     return (
       <div className="flex flex-col w-full">

@@ -2,6 +2,7 @@ import CustomRainbowKitProvider from "./CutsomRainbowKitProvider"
 import "./globals.css"
 import Layout from "@/components/shared/Layout"
 import { Inter as FontSans } from "next/font/google"
+import { WorkflowProvider } from "@/contexts/WorkflowContext"
 
 import { cn } from "@/lib/utils"
 
@@ -26,9 +27,11 @@ export default function RootLayout({ children }) {
         )}
       >
         <CustomRainbowKitProvider>
-          <Layout>
-            {children}
-          </Layout>
+          <WorkflowProvider>
+            <Layout>
+              {children}
+            </Layout>
+          </WorkflowProvider>
         </CustomRainbowKitProvider>
       </body>
     </html>

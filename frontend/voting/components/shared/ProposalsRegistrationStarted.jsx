@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react";
 
 // wagmi
-import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 
 // contract
 import { contractAddress, contractAbi } from "@/constants";
@@ -26,6 +26,8 @@ import { useWorkflow } from "@/contexts/WorkflowContext";
 
 
 const ProposalsRegistrationStarted = () => {
+
+  const { status, userAddress } = useAccount();
 
   // context
   const { fetchWorkflowStatus } = useWorkflow();
@@ -103,7 +105,11 @@ const ProposalsRegistrationStarted = () => {
       <h2 className="mb-4 text-4xl">Proposal registration has started! Submit your proposals</h2>
       <div className="flex">
             <Input placeholder="Less gaz fees plz" onChange={(p) => setProposal(p.target.value)} />
-            <Button variant="outline" disabled={setIsPending} onClick={addProposal}>{setIsPending ? 'Sending...' : 'Sent'}</Button>
+            <Button variant="outline" disabled={setIsPending} onClick={addProposal}>
+              {
+                status === "disconnected" ? "Please connect your wallet" : setIsPending ? "Sending..." : "Send"
+              }
+            </Button>
       </div>
       <h2 className="mt-6 mb-4 text-4xl">Events</h2>
       <div className="flex flex-col w-full">
@@ -114,7 +120,11 @@ const ProposalsRegistrationStarted = () => {
         })}
       </div>
       <h2 className="mb-4 text-4xl">Finish Proposal Registration and head to endProposalsRegistering :</h2>
-      <Button variant="outline" disabled={setIsPending} onClick={endProposalsRegistering}>{setIsPending ? 'Loading...' : 'Next step : endProposalsRegistering'}</Button>
+      <Button variant="outline" disabled={setIsPending} onClick={endProposalsRegistering}>
+        {
+          status === "disconnected" ? "Please connect your wallet" : setIsPending ? 'Loading...' : 'End Proposal Registering'
+        }
+      </Button>
     </div>
   )
 }

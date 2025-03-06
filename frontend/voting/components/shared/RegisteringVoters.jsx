@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react";
 
 // wagmi
-import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 
 // contract
 import { contractAddress, contractAbi } from "@/constants";
@@ -26,6 +26,8 @@ import { useWorkflow } from "@/contexts/WorkflowContext";
 
 
 const RegisteringVoters = () => {
+
+  const { status, userAddress } = useAccount();
 
   // context
   const { fetchWorkflowStatus } = useWorkflow();
@@ -113,8 +115,12 @@ const RegisteringVoters = () => {
     <div className="flex flex-col w-full">
       <h2 className="mb-4 text-4xl">Voter registration is currently open.</h2>
       <div className="flex">
-            <Input placeholder="0x000000" onChange={(_addr) => setAddress(_addr.target.value)} />
-            <Button variant="outline" disabled={setIsPending} onClick={addVoter}>{setIsPending ? 'Adding...' : 'Added'}</Button>
+            <Input placeholder="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" onChange={(_addr) => setAddress(_addr.target.value)} />
+            <Button variant="outline" disabled={setIsPending} onClick={addVoter}>
+              {
+                status === "disconnected" ? "Please connect your wallet" : setIsPending ? "Adding" : "Add"
+              }
+            </Button>
       </div>
       <h2 className="mt-6 mb-4 text-4xl">Events</h2>
       <div className="flex flex-col w-full">
@@ -125,7 +131,11 @@ const RegisteringVoters = () => {
         })}
       </div>
       <h2 className="mb-4 text-4xl">Finish Voter Registration and head to Add Proposal step :</h2>
-      <Button variant="outline" disabled={setIsPending} onClick={startProposalsRegistering}>{setIsPending ? 'Loading...' : 'Next step : Proposal Registration'}</Button>
+      <Button variant="outline" disabled={setIsPending} onClick={startProposalsRegistering}>
+        {
+          status === "disconnected" ? "Please connect your wallet" : setIsPending ? 'Loading...' : 'Start Proposal Registering'
+        }
+      </Button>
     </div>
   )
 }

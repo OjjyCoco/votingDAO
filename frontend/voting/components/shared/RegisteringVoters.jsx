@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react";
 
 // wagmi
-import { useReadContract, useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 
 // contract
 import { contractAddress, contractAbi } from "@/constants";
@@ -40,16 +40,20 @@ const RegisteringVoters = () => {
 
   const addVoter = async() => {
 
-    // if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) {
-    //   alert("Invalid Ethereum address");
-    //   return;
-    // }
-
     writeContract({
       address: contractAddress,
       abi: contractAbi,
       functionName: 'addVoter',
       args: [address]
+    })    
+  }
+
+  const startProposalsRegistering = async() => {
+
+    writeContract({
+      address: contractAddress,
+      abi: contractAbi,
+      functionName: 'startProposalsRegistering'
     })    
   }
 
@@ -62,10 +66,7 @@ const RegisteringVoters = () => {
     const numberChangedLog = await publicClient.getLogs({
         address: contractAddress,
         event: parseAbiItem('event VoterRegistered(address voterAddress)'),
-        // du premier bloc
         fromBlock: 0n,
-        // jusqu'au dernier
-        // toBlock: 'latest' // Pas besoin valeur par défaut
     })
     // Et on met ces events dans le state "events" en formant un objet cohérent pour chaque event
     setEvents(numberChangedLog.map(
@@ -100,7 +101,7 @@ const RegisteringVoters = () => {
       <h2 className="mb-4 text-4xl">Voter registration is currently open.</h2>
       <div className="flex">
             <Input placeholder="0x000000" onChange={(_addr) => setAddress(_addr.target.value)} />
-            <Button variant="outline" disabled={setIsPending} onClick={addVoter}>{setIsPending ? 'Setting...' : 'Set'}</Button>
+            <Button variant="outline" disabled={setIsPending} onClick={addVoter}>{setIsPending ? 'Adding...' : 'Added'}</Button>
       </div>
       <h2 className="mt-6 mb-4 text-4xl">Events</h2>
       <div className="flex flex-col w-full">
@@ -110,6 +111,8 @@ const RegisteringVoters = () => {
           )
         })}
       </div>
+      <h2 className="mb-4 text-4xl">Finish Voter Registration and head to Add Proposal step :</h2>
+      <Button variant="outline" disabled={setIsPending} onClick={startProposalsRegistering}>{setIsPending ? 'Loading...' : 'Next step : Proposal Registration'}</Button>
     </div>
   )
 }

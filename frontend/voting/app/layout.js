@@ -5,6 +5,7 @@ import { Inter as FontSans } from "next/font/google"
 import { WorkflowProvider } from "@/contexts/WorkflowContext"
 
 import { cn } from "@/lib/utils"
+import { OwnerProvider } from "@/contexts/OwnerContext"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -28,9 +29,11 @@ export default function RootLayout({ children }) {
       >
         <CustomRainbowKitProvider>
           <WorkflowProvider>
-            <Layout>
-              {children}
-            </Layout>
+            <OwnerProvider>
+              <Layout>
+                {children}
+              </Layout>
+            </OwnerProvider>
           </WorkflowProvider>
         </CustomRainbowKitProvider>
       </body>

@@ -1,6 +1,9 @@
 import Link from "next/link"
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
+// pour le logo
+import Image from "next/image";
+
 // navbar
 import {
   NavigationMenu,
@@ -20,17 +23,18 @@ const Header = () => {
   
   return (
     <nav className="navbar">
-        <div>Logo</div>
-        {/* <div className="flex-between w-1/4">
-            <Link href="/">Home</Link>
-            <Link href="/VoterRegistration">VoterRegistrals</Link>
-            <Link href="/ProposalRegistration">ProposalRegistration</Link>
-            <Link href="/VoteStage">VoteStage</Link>
-        </div> */}
+        <Image
+          className="dark:invert"
+          src="/votingDAOlogoBlack.svg"
+          alt="Livret+ logomark"
+          width={200}
+          // height is useless but necessary
+          height={1}
+        />
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Livret DeFi</NavigationMenuTrigger>
+              <NavigationMenuTrigger>DAO</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                   <li className="row-span-3">
@@ -41,10 +45,10 @@ const Header = () => {
                       >
                         {/* <Icons.logo className="h-6 w-6" /> */}
                         <div className="mb-2 mt-4 text-lg font-medium">
-                          Les boucles
+                          DAO
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
-                          Le Livret DeFi offre plusieurs bouche zijqzoiqocbqorhbohqfbqoi bblala
+                          Un peu de blabla pour décrire les protocols du DAO
                         </p>
                       </a>
                     </NavigationMenuLink>
@@ -56,15 +60,15 @@ const Header = () => {
                     How to install dependencies and structure your app.
                   </ListItem> */}
                     <Link href="/docs" className="block p-2 text-sm font-medium hover:underline">
-                      <strong>Boucle 1</strong>
+                      <strong>Voting</strong>
                       <p>Description</p>
                     </Link>
                     <Link href="/docs" className="block p-2 text-sm font-medium hover:underline">
-                      <strong>Boucle 2</strong>
+                      <strong>DeFi Wars</strong>
                       <p>Description</p>
                     </Link>
                     <Link href="/docs" className="block p-2 text-sm font-medium hover:underline">
-                      <strong>Boucle 3</strong>
+                      <strong>Pas d'inspi</strong>
                       <p>Description</p>
                     </Link>
                 </ul>
@@ -73,21 +77,20 @@ const Header = () => {
             <NavigationMenuItem>
               <Link href="/docs" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Documentation
+                  Doc
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/uni" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  University
+                  Uni
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div>Voting DAO</div>
         <ConnectButton />
     </nav>
   )

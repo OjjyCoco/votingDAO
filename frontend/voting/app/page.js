@@ -15,7 +15,7 @@ export default function Home() {
 
   const { workflowStatus, loading, error } = useWorkflow();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Workflow Status is loading...</p>;
   if (error) return <p>Error loading workflow status</p>;
 
   const renderComponent = () => {

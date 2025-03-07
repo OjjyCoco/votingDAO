@@ -22,15 +22,17 @@ import Event from "./Event";
 
 // context
 import { useWorkflow } from "@/contexts/WorkflowContext";
+import { useOwner } from "@/contexts/OwnerContext";
 
 
 
 const RegisteringVoters = () => {
 
-  const { status, userAddress } = useAccount();
+  const { status, address : userAddress } = useAccount();
 
   // context
   const { fetchWorkflowStatus } = useWorkflow();
+  const { ownerAddress, fetchOwnerAddress } = useOwner();
 
   const [address, setAddress] = useState(null)
   const [events, setEvents] = useState([])
@@ -104,39 +106,87 @@ const RegisteringVoters = () => {
     }
   }, [isSuccess, errorConfirmation])
 
-  // Mettre à jour le workflow status après une transaction
+  // Mettre à jour le context du WorkflowStatus pour savoir si on change de composant ou pas
   useEffect(() => {
     if (isSuccess) {
-      fetchWorkflowStatus(); // Met à jour le workflowStatus après une transaction réussie
+      fetchWorkflowStatus();
     }
   }, [isSuccess]);
+  useEffect(() => {
+    if (isSuccess) {
+      fetchOwnerAddress();
+    }
+  }, [status]);
 
   return (
-    <div className="flex flex-col w-full">
-      <h2 className="mb-4 text-4xl">Voter registration is currently open.</h2>
-      <div className="flex">
-            <Input placeholder="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" onChange={(_addr) => setAddress(_addr.target.value)} />
-            <Button variant="outline" disabled={setIsPending} onClick={addVoter}>
-              {
-                status === "disconnected" ? "Please connect your wallet" : setIsPending ? "Adding" : "Add"
-              }
-            </Button>
-      </div>
-      <h2 className="mt-6 mb-4 text-4xl">Events</h2>
-      <div className="flex flex-col w-full">
-        {events.length > 0 && events.map((event) => {
-          return (
-            <Event event={event} key={crypto.randomUUID()} />
-          )
-        })}
-      </div>
-      <h2 className="mb-4 text-4xl">Finish Voter Registration and head to Add Proposal step :</h2>
-      <Button variant="outline" disabled={setIsPending} onClick={startProposalsRegistering}>
-        {
-          status === "disconnected" ? "Please connect your wallet" : setIsPending ? 'Loading...' : 'Start Proposal Registering'
-        }
-      </Button>
+    <div>
+      {
+        ownerAddress === userAddress ? (
+          <div className="flex flex-col w-full">
+          <h2 className="mb-4 text-4xl">Voter registration is currently open.</h2>
+          <div className="flex">
+                <Input placeholder="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" onChange={(_addr) => setAddress(_addr.target.value)} />
+                <Button variant="outline" disabled={setIsPending} onClick={addVoter}>
+                  {
+                    status === "disconnected" ? "Please connect your wallet" : setIsPending ? "Adding" : "Add"
+                  }
+                </Button>
+          </div>
+          <h2 className="mt-6 mb-4 text-4xl">Events</h2>
+          <div className="flex flex-col w-full">
+            {events.length > 0 && events.map((event) => {
+              return (
+                <Event event={event} key={crypto.randomUUID()} />
+              )
+            })}
+          </div>
+          <h2 className="mb-4 text-4xl">Finish Voter Registration and head to Add Proposal step :</h2>
+          <Button variant="outline" disabled={setIsPending} onClick={startProposalsRegistering}>
+            {
+              status === "disconnected" ? "Please connect your wallet" : setIsPending ? 'Loading...' : 'Start Proposal Registering'
+            }
+          </Button>
+        </div> ) : (
+        <div>
+          <h2 className="mt-6 mb-4 text-4xl">Admin is currently registering voters, please wait until he has finished.</h2>
+          <h2 className="mt-6 mb-4 text-4xl">You can still see the registered voters below :</h2>
+          <div className="flex flex-col w-full">
+          {events.length > 0 && events.map((event) => {
+            return (
+              <Event event={event} key={crypto.randomUUID()} />
+            )
+          })}
+          </div>
+        </div>)
+      }
     </div>
+    // <div className="flex flex-col w-full">
+    //   <p>Your current address : {userAddress}</p>
+    //   <p>Owner address : {ownerAddress}</p>
+    //   <h2 className="mb-4 text-4xl">Voter registration is currently open.</h2>
+    //   <div className="flex">
+    //         <Input placeholder="0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" onChange={(_addr) => setAddress(_addr.target.value)} />
+    //         <Button variant="outline" disabled={setIsPending} onClick={addVoter}>
+    //           {
+    //             status === "disconnected" ? "Please connect your wallet" : setIsPending ? "Adding" : "Add"
+    //           }
+    //         </Button>
+    //   </div>
+    //   <h2 className="mt-6 mb-4 text-4xl">Events</h2>
+    //   <div className="flex flex-col w-full">
+    //     {events.length > 0 && events.map((event) => {
+    //       return (
+    //         <Event event={event} key={crypto.randomUUID()} />
+    //       )
+    //     })}
+    //   </div>
+    //   <h2 className="mb-4 text-4xl">Finish Voter Registration and head to Add Proposal step :</h2>
+    //   <Button variant="outline" disabled={setIsPending} onClick={startProposalsRegistering}>
+    //     {
+    //       status === "disconnected" ? "Please connect your wallet" : setIsPending ? 'Loading...' : 'Start Proposal Registering'
+    //     }
+    //   </Button>
+    // </div>
   )
 }
 

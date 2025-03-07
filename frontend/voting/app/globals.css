@@ -15,7 +15,7 @@
 }
 
 .footer {
-  @apply w-full flex-center p-10;
+  @apply w-full content-center p-10 bg-gray-800 text-white;
 }
 
 .flex-between {
@@ -32,7 +32,12 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    /* différentes teintes de blanc cassé */
+    /* --background: 40 30% 96%; */
+    --background: 40 15% 99%;
+    /* --background: 0 0% 100%; */
+    /* vraiment cassé */
+    /* --background: 50 27% 94%; */
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;

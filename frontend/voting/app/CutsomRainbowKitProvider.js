@@ -32,9 +32,9 @@ const CustomRainbowKitProvider = ({ children }) => {
       <QueryClientProvider client={queryClient}>
       <RainbowKitProvider
         theme={lightTheme({
-        accentColor: '#292b2e',
+        accentColor: '#1F2937',
         accentColorForeground: 'white',
-        borderRadius: 'medium',
+        borderRadius: 'small',
         fontStack: 'system',
         overlayBlur: 'small',
       })}>

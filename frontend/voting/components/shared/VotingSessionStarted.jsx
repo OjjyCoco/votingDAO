@@ -34,7 +34,7 @@ const ProposalsRegistrationStarted = () => {
   const { fetchWorkflowStatus } = useWorkflow();
   const { ownerAddress } = useOwner();
 
-  const [proposal, setProposal] = useState(null)
+  const [votedId, setVotedId] = useState(null)
   const [proposalIdToGet, setProposalIdToGet] = useState(null)
   const [events, setEvents] = useState([])
   
@@ -49,22 +49,22 @@ const ProposalsRegistrationStarted = () => {
     }
   })
 
-  const addProposal = async() => {
+  const setVote = async() => {
 
     writeContract({
       address: contractAddress,
       abi: contractAbi,
-      functionName: 'addProposal',
-      args: [proposal]
+      functionName: 'setVote',
+      args: [votedId]
     })    
   }
 
-  const endProposalsRegistering = async() => {
+  const endVotingSession = async() => {
 
     writeContract({
       address: contractAddress,
       abi: contractAbi,
-      functionName: 'endProposalsRegistering'
+      functionName: 'endVotingSession'
     })    
   }
 
@@ -76,14 +76,14 @@ const ProposalsRegistrationStarted = () => {
     // On peut changer le nom de la variable numberChangedLog je suppose
     const numberChangedLog = await publicClient.getLogs({
         address: contractAddress,
-        event: parseAbiItem('event ProposalRegistered(uint proposalId)'),
+        event: parseAbiItem('event Voted(address voter, uint proposalId)'),
         fromBlock: 0n,
     })
     // Et on met ces events dans le state "events" en formant un objet cohérent pour chaque event
     setEvents(numberChangedLog.map(
         log => ({
-          proposalId: log.args.proposalId.toString(),
-          // ProposalDescription : log.args.ProposalDescription.toString()
+            voter: log.args.voter.toString(),
+            proposalId : log.args.proposalId.toString()
         })
     ))
   }
@@ -118,12 +118,12 @@ const ProposalsRegistrationStarted = () => {
 
   return (
     <div className="flex flex-col w-full">
-      <h2 className="mb-4 text-4xl">Proposal registration has started! Submit your proposals</h2>
+      <h2 className="mb-4 text-4xl">Submit the proposal's ID you want to vote for</h2>
       <div className="flex">
-        <Input placeholder="Less gaz fees plz" onChange={(p) => setProposal(p.target.value)} />
-        <Button variant="outline" disabled={writePending} onClick={addProposal}>
+        <Input placeholder="666" onChange={(v) => setVotedId(v.target.value)} />
+        <Button variant="outline" disabled={writePending} onClick={setVote}>
           {
-            status === "disconnected" ? "Please connect your wallet" : writePending ? "Sending..." : "Send"
+            status === "disconnected" ? "Please connect your wallet" : writePending ? "Voting..." : "Vote"
           }
         </Button>
       </div>
@@ -157,10 +157,10 @@ const ProposalsRegistrationStarted = () => {
       )}
       { ownerAddress === userAddress && (
         <>
-          <h2 className="mb-4 text-4xl">Finish Proposal Registration and head to endProposalsRegistering :</h2>
-          <Button variant="outline" disabled={writePending} onClick={endProposalsRegistering}>
+          <h2 className="mb-4 text-4xl">End Voting Session :</h2>
+          <Button variant="outline" disabled={writePending} onClick={endVotingSession}>
             {
-              status === "disconnected" ? "Please connect your wallet" : writePending ? 'Loading...' : 'End Proposal Registering'
+              status === "disconnected" ? "Please connect your wallet" : writePending ? 'Loading...' : 'End Voting Session'
             }
           </Button>
         </>

@@ -3,9 +3,9 @@
 
 import RegisteringVoters from "@/components/shared/RegisteringVoters";
 import ProposalsRegistrationStarted from "@/components/shared/ProposalsRegistrationStarted";
-// import ProposalsRegistrationEnded from "../components/ProposalsRegistrationEnded";
-// import VotingSessionStarted from "../components/VotingSessionStarted";
-// import VotingSessionEnded from "../components/VotingSessionEnded";
+import ProposalsRegistrationEnded from "@/components/shared/ProposalsRegistrationEnded";
+import VotingSessionStarted from "@/components/shared/VotingSessionStarted";
+import VotingSessionEnded from "@/components/shared/VotingSessionEnded";
 // import VotesTallied from "../components/VotesTallied";
 
 // context
@@ -24,12 +24,12 @@ export default function Home() {
         return <RegisteringVoters />;
       case 1:
         return <ProposalsRegistrationStarted />;
-      // case 2:
-      //   return <ProposalsRegistrationEnded />;
-      // case 3:
-      //   return <VotingSessionStarted />;
-      // case 4:
-      //   return <VotingSessionEnded />;
+      case 2:
+        return <ProposalsRegistrationEnded />;
+      case 3:
+        return <VotingSessionStarted />;
+      case 4:
+        return <VotingSessionEnded />;
       // case 5:
       //   return <VotesTallied />;
       default:

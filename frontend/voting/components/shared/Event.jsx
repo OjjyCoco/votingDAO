@@ -29,6 +29,15 @@ const Event = ({ event }) => {
             </div>
           </Card>
         )
+      case 3:
+        return (
+          <Card className="p-4 mb-2">
+            <div className="flex items-center">
+              <Badge className="bg-lime-500">Vote registered</Badge>
+              <p className="ml-2">Voter : <span className="font-bold">{event.voter}</span> has voted for proposal ID <span className="font-bold">{event.proposalId}</span></p>
+            </div>
+          </Card>
+        )
       default:
         return <p>Can't fetch events related to this WF status.</p>;
     }

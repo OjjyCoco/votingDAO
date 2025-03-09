@@ -1,11 +1,11 @@
 // react
 "use client";
 
-import RegisteringVoters from "@/components/shared/RegisteringVoters";
-import ProposalsRegistrationStarted from "@/components/shared/ProposalsRegistrationStarted";
-import ProposalsRegistrationEnded from "@/components/shared/ProposalsRegistrationEnded";
-import VotingSessionStarted from "@/components/shared/VotingSessionStarted";
-import VotingSessionEnded from "@/components/shared/VotingSessionEnded";
+import RegisteringVoters from "@/components/status/RegisteringVoters";
+import ProposalsRegistrationStarted from "@/components/status/ProposalsRegistrationStarted";
+import ProposalsRegistrationEnded from "@/components/status/ProposalsRegistrationEnded";
+import VotingSessionStarted from "@/components/status/VotingSessionStarted";
+import VotingSessionEnded from "@/components/status/VotingSessionEnded";
 // import VotesTallied from "../components/VotesTallied";
 
 // context

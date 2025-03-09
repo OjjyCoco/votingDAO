@@ -7,7 +7,7 @@
 }
 
 .navbar {
-  @apply flex-between p-10;
+  @apply flex-between p-5;
 }
 
 .main {

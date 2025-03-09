@@ -30,14 +30,14 @@ const CustomRainbowKitProvider = ({ children }) => {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-      <RainbowKitProvider
-        theme={lightTheme({
-        accentColor: '#1F2937',
-        accentColorForeground: 'white',
-        borderRadius: 'small',
-        fontStack: 'system',
-        overlayBlur: 'small',
-      })}>
+        <RainbowKitProvider
+          theme={lightTheme({
+          accentColor: '#1F2937',
+          accentColorForeground: 'white',
+          borderRadius: 'small',
+          fontStack: 'system',
+          overlayBlur: 'small',
+        })}>
           {children}
         </RainbowKitProvider>
       </QueryClientProvider>

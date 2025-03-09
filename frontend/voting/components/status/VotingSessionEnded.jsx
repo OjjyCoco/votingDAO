@@ -2,6 +2,7 @@
 
 // shadcn
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 
 // react
 import { useEffect } from "react";
@@ -63,20 +64,21 @@ const VotingSessionEnded = () => {
 //   }, [status]);
 
   return (
-    <div>
-        {
-        ownerAddress === userAddress ? (
-            <div className="flex flex-col w-full">
-                <h2 className="mb-4 text-4xl">Voting session has ended. Click to tally votes :</h2>
-                <Button variant="outline" disabled={writePending} onClick={tallyVotes}>
-                    {
-                    status === "disconnected" ? "Please connect your wallet" : writePending ? 'Loading...' : 'Tally'
-                    }
-                </Button>
-            </div> ) : (
-            <h2 className="mt-6 mb-4 text-4xl">Voting session has ended. Wait for the admin to start vote tallying function.</h2>
-          )
-        }
+    <div className="flex flex-col items-center justify-center w-full h-[80vh] p-6">
+        {ownerAddress === userAddress ? (
+          <Card className="w-full max-w-3xl p-6 bg-white shadow-lg rounded-2xl">
+            <div className="flex flex-col items-center w-full text-center">
+              <h2 className="mb-6 text-3xl font-bold text-gray-800">Voting session has ended. Click to tally votes:</h2>
+              <Button variant="outline" disabled={writePending} onClick={tallyVotes}>
+                {status === "disconnected" ? "Please connect your wallet" : writePending ? 'Loading...' : 'Tally'}
+              </Button>
+            </div>
+          </Card>
+        ) : (
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-800">Voting session has ended. Wait for the admin to start vote tallying function.</h2>
+          </div>
+        )}
     </div>
   )
 }

@@ -3,6 +3,7 @@
 // shadcn
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 
 // react
 import { useState, useEffect } from "react";
@@ -18,7 +19,7 @@ import { parseAbiItem } from "viem";
 import { publicClient } from "@/utils/client";
 
 // Event
-import Event from "./Event";
+import Event from "../shared/Event";
 
 // context
 import { useWorkflow } from "@/contexts/WorkflowContext";
@@ -117,56 +118,58 @@ const ProposalsRegistrationStarted = () => {
 
 
   return (
-    <div className="flex flex-col w-full">
-      <h2 className="mb-4 text-4xl">Submit the proposal's ID you want to vote for</h2>
-      <div className="flex">
-        <Input placeholder="666" onChange={(v) => setVotedId(v.target.value)} />
-        <Button variant="outline" disabled={writePending} onClick={setVote}>
-          {
-            status === "disconnected" ? "Please connect your wallet" : writePending ? "Voting..." : "Vote"
-          }
-        </Button>
-      </div>
-      <h2 className="mt-6 mb-4 text-4xl">Events</h2>
-      <div className="flex flex-col w-full">
-        {events.length > 0 && events.map((event) => {
-          return (
-            <Event event={event} key={crypto.randomUUID()} />
-          )
-        })}
-      </div>
-      <h2 className="mb-4 text-4xl">Find a proposal by ID :</h2>
-      <div className="flex">
-        <Input placeholder="Enter proposal ID" type="number" min="0" step="1" onChange={(id) => setProposalIdToGet(id.target.value)} />
-        <Button variant="outline" disabled={getProposalPending} onClick={getProposal}>
-          {
-            status === "disconnected" ? "Please connect your wallet" : getProposalPending ? "Fetching..." : "Find"
-          }
-        </Button>
-      </div>
-      {proposalIdToGet && (
-        <div>
-          {getProposalPending ? (
-            <div>Fetching...</div>
-          ) : getProposalError ? (
-            <p>There is no proposal with this ID</p>
-          ) : (
-            <p>{getOneProposal?.description || "No description available"}</p>
+    <div className="flex flex-col items-center justify-center w-full h-[80vh] p-6">
+      <Card className="w-full max-w-3xl p-6 bg-white shadow-lg rounded-2xl">
+        <div className="flex flex-col items-center w-full text-center">
+          <h2 className="mb-6 text-3xl font-bold text-gray-800">Submit the proposal's ID you want to vote for</h2>
+          <div className="flex w-full gap-4">
+            <Input placeholder="666" onChange={(v) => setVotedId(v.target.value)} />
+            <Button variant="outline" disabled={writePending} onClick={setVote}>
+              {status === "disconnected" ? "Please connect your wallet" : writePending ? "Voting..." : "Vote"}
+            </Button>
+          </div>
+
+          <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">Events</h2>
+          <div className="flex flex-col w-full gap-2">
+            {events.length > 0 ? (
+              events.map((event) => <Event event={event} key={crypto.randomUUID()} />)
+            ) : (
+              <p className="text-gray-500">No events yet.</p>
+            )}
+          </div>
+
+          <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">Find a proposal by ID:</h2>
+          <div className="flex w-full gap-4">
+            <Input placeholder="Enter proposal ID" type="number" min="0" step="1" onChange={(id) => setProposalIdToGet(id.target.value)} />
+            <Button variant="outline" disabled={getProposalPending} onClick={getProposal}>
+              {status === "disconnected" ? "Please connect your wallet" : getProposalPending ? "Fetching..." : "Find"}
+            </Button>
+          </div>
+
+          {proposalIdToGet && (
+            <div className="mt-4">
+              {getProposalPending ? (
+                <div>Fetching...</div>
+              ) : getProposalError ? (
+                <p className="text-red-500">There is no proposal with this ID</p>
+              ) : (
+                <p>{getOneProposal?.description || "No description available"}</p>
+              )}
+            </div>
+          )}
+
+          {ownerAddress === userAddress && (
+            <>
+              <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">End Voting Session:</h2>
+              <Button variant="outline" disabled={writePending} onClick={endVotingSession}>
+                {status === "disconnected" ? "Please connect your wallet" : writePending ? 'Loading...' : 'End Voting Session'}
+              </Button>
+            </>
           )}
         </div>
-      )}
-      { ownerAddress === userAddress && (
-        <>
-          <h2 className="mb-4 text-4xl">End Voting Session :</h2>
-          <Button variant="outline" disabled={writePending} onClick={endVotingSession}>
-            {
-              status === "disconnected" ? "Please connect your wallet" : writePending ? 'Loading...' : 'End Voting Session'
-            }
-          </Button>
-        </>
-      )}
+      </Card>
     </div>
-    
+
   )
 }
 

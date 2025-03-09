@@ -36,7 +36,6 @@ export const WorkflowProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
   // Appel initial au chargement (montage du comp)
   useEffect(() => {
     fetchWorkflowStatus();

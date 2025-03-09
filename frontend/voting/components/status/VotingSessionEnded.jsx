@@ -76,7 +76,7 @@ const VotingSessionEnded = () => {
           </Card>
         ) : (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-gray-800">Voting session has ended. Wait for the admin to start vote tallying function.</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Voting session has ended. Wait for the admin to start the vote tallying function.</h2>
           </div>
         )}
     </div>

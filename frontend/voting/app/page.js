@@ -6,7 +6,7 @@ import ProposalsRegistrationStarted from "@/components/status/ProposalsRegistrat
 import ProposalsRegistrationEnded from "@/components/status/ProposalsRegistrationEnded";
 import VotingSessionStarted from "@/components/status/VotingSessionStarted";
 import VotingSessionEnded from "@/components/status/VotingSessionEnded";
-// import VotesTallied from "../components/VotesTallied";
+import VotesTallied from "@/components/status/VotesTallied";
 
 // context
 import { useWorkflow } from "@/contexts/WorkflowContext";
@@ -30,8 +30,8 @@ export default function Home() {
         return <VotingSessionStarted />;
       case 4:
         return <VotingSessionEnded />;
-      // case 5:
-      //   return <VotesTallied />;
+      case 5:
+        return <VotesTallied />;
       default:
         return <p>Unknown status</p>;
     }

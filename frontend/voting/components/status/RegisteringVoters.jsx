@@ -159,7 +159,7 @@ const RegisteringVoters = () => {
               {events.length > 0 ? (
                 events.map((event) => <Event event={event} key={crypto.randomUUID()} />)
               ) : (
-                <p className="text-gray-500">No registered voters yet.</p>
+                <p className="text-gray-500">Events are arriving when a voter is registered.</p>
               )}
             </div>
           </div>

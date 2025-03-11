@@ -91,7 +91,7 @@ const Header = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <ConnectButton />
+        <ConnectButton chainStatus="none" showBalance={false}/>
     </nav>
   )
 }

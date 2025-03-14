@@ -78,7 +78,7 @@ const ProposalsRegistrationStarted = () => {
     const numberChangedLog = await publicClient.getLogs({
         address: contractAddress,
         event: parseAbiItem('event ProposalRegistered(uint proposalId)'),
-        fromBlock: 7900529,
+        fromBlock: 7900529n,
     })
     // Et on met ces events dans le state "events" en formant un objet cohérent pour chaque event
     setEvents(numberChangedLog.map(
@@ -94,7 +94,7 @@ const ProposalsRegistrationStarted = () => {
       getEvents();
     }
     if(errorConfirmation) {
-      alert("Transaction failed");
+      alert(errorConfirmation.shortMessage || errorConfirmation.message);
     }
   }, [isSuccess, errorConfirmation])
 
@@ -162,7 +162,7 @@ const ProposalsRegistrationStarted = () => {
               {getProposalPending ? (
                 <div>Fetching...</div>
               ) : getProposalError ? (
-                <p className="text-gray-500">There is no proposal with this ID</p>
+                <p className="text-gray-500">There is no proposal with this ID {getProposalError.message}</p>
               ) : (
                 <p>{getOneProposal?.description || "No description available"}</p>
               )}

@@ -77,7 +77,7 @@ const RegisteringVoters = () => {
     const numberChangedLog = await publicClient.getLogs({
         address: contractAddress,
         event: parseAbiItem('event VoterRegistered(address voterAddress)'),
-        fromBlock: 7900529,
+        fromBlock: 7900529n,
     })
     // Et on met ces events dans le state "events" en formant un objet cohérent pour chaque event
     setEvents(numberChangedLog.map(
@@ -103,7 +103,7 @@ const RegisteringVoters = () => {
       //     duration: 3000,
       //     isClosable: true,
       // });
-      alert("Transaction failed");
+      alert(errorConfirmation.shortMessage || errorConfirmation.message);
     }
   }, [isSuccess, errorConfirmation])
 

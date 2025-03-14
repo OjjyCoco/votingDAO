@@ -1,9 +1,10 @@
 import { createPublicClient, http } from "viem";
-import { hardhat } from 'viem/chains';
+import { sepolia } from 'viem/chains';
 
 // const RPC = process.env.NEXT_PUBLIC_ALCHEMY_RPC || "";
+const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL || "";
 
 export const publicClient = createPublicClient({
-    chain: hardhat,
-    transport: http("http://127.0.0.1:8545")
+    chain: sepolia,
+    transport: http(SEPOLIA_RPC_URL)
 })

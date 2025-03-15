@@ -11,12 +11,14 @@ import {
   QueryClientProvider,
   QueryClient,
 } from "@tanstack/react-query";
-import { sepolia } from '@/utils/sepolia';
+//import { sepolia } from '@/utils/sepolia';
+import { configSepolia } from '@/utils/wagmi';
+
 
 const config = getDefaultConfig({
   appName: 'voting',
   projectId: 'e02d1c9b3c5856ff339e19638eed0a34',
-  chains: [sepolia],
+  chains: [configSepolia],
   ssr: true, // If your dApp uses server side rendering (SSR)
 });
 
@@ -25,7 +27,7 @@ const queryClient = new QueryClient();
 
 const CustomRainbowKitProvider = ({ children }) => {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={configSepolia}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           theme={lightTheme({

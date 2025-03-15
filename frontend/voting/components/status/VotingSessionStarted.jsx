@@ -94,7 +94,7 @@ const ProposalsRegistrationStarted = () => {
       getEvents();
     }
     if(errorConfirmation) {
-      alert("Transaction failed");
+      alert(errorConfirmation.shortMessage || errorConfirmation.message);
     }
   }, [isSuccess, errorConfirmation])
 

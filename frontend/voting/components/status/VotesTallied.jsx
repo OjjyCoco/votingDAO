@@ -33,6 +33,7 @@ const VotesTallied = () => {
     abi: contractAbi,
     functionName: 'getOneProposal',
     args : proposalIdToGet ? [proposalIdToGet] : undefined,
+    account : userAddress,
   })
 
   const getProposal = () => {

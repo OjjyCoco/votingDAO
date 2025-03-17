@@ -78,7 +78,7 @@ const ProposalsRegistrationStarted = () => {
     const numberChangedLog = await publicClient.getLogs({
         address: contractAddress,
         event: parseAbiItem('event ProposalRegistered(uint proposalId)'),
-        fromBlock: 7900529n,
+        fromBlock: 7919729n,
     })
     // Et on met ces events dans le state "events" en formant un objet cohérent pour chaque event
     setEvents(numberChangedLog.map(
@@ -109,6 +109,7 @@ const ProposalsRegistrationStarted = () => {
     abi: contractAbi,
     functionName: 'getOneProposal',
     args : proposalIdToGet ? [proposalIdToGet] : undefined,
+    account : userAddress,
   })
 
   const getProposal = () => {

@@ -37,6 +37,7 @@ const ProposalsRegistrationStarted = () => {
 
   const [votedId, setVotedId] = useState(null)
   const [proposalIdToGet, setProposalIdToGet] = useState(null)
+  const [voterAddressToGet, setVoterAddressToGet] = useState(null)
   const [events, setEvents] = useState([])
   
   const { data: hash, error, isPending: writePending, writeContract } = useWriteContract({
@@ -119,6 +120,20 @@ const ProposalsRegistrationStarted = () => {
     proposalRefetch();
   };
 
+  
+  const { data: getOneVoter, error: getVoterError, isPending: getVoterPending, refetch : getVoterRefetch } = useReadContract({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: 'getVoter',
+    args : voterAddressToGet ? [voterAddressToGet] : undefined,
+    account : userAddress,
+  })
+
+  const getVoter = () => {
+    if (!voterAddressToGet) return;
+    getVoterRefetch();
+  };
+
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-[80vh] p-6">
@@ -160,6 +175,29 @@ const ProposalsRegistrationStarted = () => {
               )}
             </div>
           )}
+
+
+          <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">Find a voter by Address:</h2>
+          <div className="flex w-full gap-4">
+            <Input placeholder="Enter voter ID" type="address"  value={voterAddressToGet} onChange={(e) => setVoterAddressToGet(e.target.value)} />
+            <Button variant="outline" disabled={getVoterPending} onClick={getVoter}>
+              {status === "disconnected" ? "Please connect your wallet" : getVoterPending ? "Fetching..." : "Find"}
+            </Button>
+          </div>
+
+          {voterAddressToGet && (
+            <div className="mt-4">
+              {getVoterPending ? (
+                <div>Fetching...</div>
+              ) : getVoterError ? (
+                <p className="text-red-500">There is no voter with this Address {getVoterError.message}</p>
+              ) : (
+                <p>vote : {getOneVoter?.votedProposalId.toString() || "No vote available"}</p>
+              )}
+            </div>
+          )}
+
+
 
           {ownerAddress === userAddress && (
             <>

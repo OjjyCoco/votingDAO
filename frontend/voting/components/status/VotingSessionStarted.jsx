@@ -75,10 +75,12 @@ const ProposalsRegistrationStarted = () => {
 
   const getEvents = async() => {
     // On peut changer le nom de la variable numberChangedLog je suppose
+    const fromBlock = BigInt(Number(await publicClient.getBlockNumber()) - 2000);
+
     const numberChangedLog = await publicClient.getLogs({
         address: contractAddress,
         event: parseAbiItem('event Voted(address voter, uint proposalId)'),
-        fromBlock: 7919729n,
+        fromBlock: Number(fromBlock) >= 0 ? fromBlock : BigInt(0),
     })
     // Et on met ces events dans le state "events" en formant un objet cohérent pour chaque event
     setEvents(numberChangedLog.map(

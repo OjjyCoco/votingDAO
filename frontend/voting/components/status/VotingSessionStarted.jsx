@@ -177,7 +177,7 @@ const ProposalsRegistrationStarted = () => {
           )}
 
 
-          <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">Find a voter by Address:</h2>
+          <h2 className="mt-8 mb-4 text-2xl font-semibold text-gray-800">Find a vote by voter Address:</h2>
           <div className="flex w-full gap-4">
             <Input placeholder="Enter voter ID" type="address"  value={voterAddressToGet} onChange={(e) => setVoterAddressToGet(e.target.value)} />
             <Button variant="outline" disabled={getVoterPending} onClick={getVoter}>

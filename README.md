@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="frontend/voting/public/LogoNoirBackgrounded.png" alt="DLivret Logo" width="200"/>
+</p>
+
 # DApp Voting – Voting Smart Contract
 
 ## 🇬🇧 Project Overview
